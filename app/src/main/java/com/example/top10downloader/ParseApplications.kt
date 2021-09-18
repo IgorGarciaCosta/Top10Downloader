@@ -11,7 +11,7 @@ class ParseApplications {
     fun parse(xmlData:String):Boolean{
         Log.d(TAG, "parse called with $xmlData")
         var status = true
-        var entry = false
+        var inEntry = false
         var textValue = ""
 
         try{
@@ -22,7 +22,43 @@ class ParseApplications {
             var eventType = xpp.eventType
             var currentRecord = FeedEntry()
             while(eventType!=XmlPullParser.END_DOCUMENT){
+                val tagName = xpp.name?.toLowerCase()
+                when(eventType){
+                    XmlPullParser.START_TAG->{
+                        Log.d(TAG, "parser: Starting tag for "+tagName)
+                        if(tagName=="entry"){
+                            inEntry = true
+                        }
+                    }
 
+                    XmlPullParser.TEXT->textValue=xpp.text
+
+                    XmlPullParser.END_TAG->{
+                        Log.d(TAG, "parse: Ending tag for "+tagName)
+                        if(inEntry){
+                            when(tagName){
+                                "entry"->{
+                                    applications.add(currentRecord)
+                                    inEntry = false
+                                    currentRecord = FeedEntry()//create a new obj
+                                }
+
+                                "name"->currentRecord.name = textValue
+                                "artist"->currentRecord.artist = textValue
+                                "releasedate"->currentRecord.releaseDate =textValue
+                                "summary"->currentRecord.summary = textValue
+                                "image"->currentRecord.imageURL = textValue
+                            }
+                        }
+                    }
+                }
+                eventType = xpp.next()
+
+            }
+
+            for(app in applications){
+                Log.d(TAG, "***********")
+                Log.d(TAG,app.toString())
             }
 
         }
