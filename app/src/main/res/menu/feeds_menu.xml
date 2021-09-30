@@ -8,4 +8,4 @@
         android:id="@+id/mnuPaid"/>
     <item android:title="Songs"
         android:id="@+id/mnuSongs"/>
-</menu> 
+</menu>
