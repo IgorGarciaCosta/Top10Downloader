@@ -5,7 +5,6 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
 import android.widget.ListView
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -33,7 +32,7 @@ class FeedEntry{
 class MainActivity : AppCompatActivity() {
     private val TAG = "Main Activity"
 
-    private val downloadData by lazy { DownloadData(this, findViewById(R.id.xmlListView)) }
+    private val downloadData by lazy {  DownloadData(this, findViewById(R.id.xmlListView)) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +65,6 @@ class MainActivity : AppCompatActivity() {
                 val parseApplications =ParseApplications()
                 parseApplications.parse(result)
 
-                //val arrayAdapter = ArrayAdapter<FeedEntry>(propContext, R.layout.list_item, parseApplications.applications)
-                //propListView.adapter = arrayAdapter
                 val feedAdapter = FeedAdapter(propContext, R.layout.list_record, parseApplications.applications)
                 propListView.adapter = feedAdapter
             }
