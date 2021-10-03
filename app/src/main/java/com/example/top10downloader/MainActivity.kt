@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -36,11 +37,21 @@ class MainActivity : AppCompatActivity() {
     private var feedUrl:String = "http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topfreeapplications/limit=%d/xml"
     private var feedLimit = 10
 
+    private var feedCachedUrl = "INVALIDATED"
+    private var STATE_URL = "feedUrl"
+    private var STATE_LIMIT = "feedLimit"
+
     private var downloadData:DownloadData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.d(TAG, "onCreate called")
+        if(savedInstanceState!=null){
+            feedUrl = savedInstanceState.getString(STATE_URL)!!
+            feedLimit = savedInstanceState.getInt(STATE_LIMIT)
+        }
         downloadUrl(feedUrl.format(feedLimit))//replaces the %d with feedLimit value
         Log.d(TAG, "onCreate: done")
     }
@@ -88,6 +99,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            R.id.mnuRefresh -> reDownloadControl=true
+
             else->
                 return super.onOptionsItemSelected(item)
         }
@@ -96,6 +109,12 @@ class MainActivity : AppCompatActivity() {
 
 
         return true
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(STATE_URL, feedUrl)
+        outState.putInt(STATE_LIMIT, feedLimit)
     }
 
     override fun onDestroy() {
