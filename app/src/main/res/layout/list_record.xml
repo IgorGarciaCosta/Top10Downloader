@@ -3,20 +3,45 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp">
+    android:layout_margin="20dp"
+    android:padding="20dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tvCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardCornerRadius="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/tvImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:minWidth="200dp"
+            android:minHeight="200dp"
+
+            app:layout_constraintBottom_toTopOf="@+id/tvName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.cardview.widget.CardView>
 
 
     <TextView
         android:id="@+id/tvName"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="teste"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_height="wrap_content"
-        android:text="teste"
-        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvCardView" />
 
     <TextView
         android:id="@+id/tvArtist"
