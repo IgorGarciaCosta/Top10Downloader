@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     private var STATE_URL = "feedUrl"
     private var STATE_LIMIT = "feedLimit"
 
+
     private var downloadData:DownloadData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
